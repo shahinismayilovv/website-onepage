@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Lightbox</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Gallery</h1>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="images/nature1.svg" alt="Nature 1" class="thumbnail">
+            </div>
+            <div class="gallery-item">
+                <img src="images/nature2.svg" alt="Nature 2" class="thumbnail">
+            </div>
+            <div class="gallery-item">
+                <img src="images/nature3.svg" alt="Nature 3" class="thumbnail">
+            </div>
+            <div class="gallery-item">
+                <img src="images/nature1.svg" alt="Nature 4" class="thumbnail">
+            </div>
+            <div class="gallery-item">
+                <img src="images/nature2.svg" alt="Nature 5" class="thumbnail">
+            </div>
+            <div class="gallery-item">
+                <img src="images/nature3.svg" alt="Nature 6" class="thumbnail">
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <span class="close">&times;</span>
+        <span class="prev">&#10094;</span>
+        <span class="next">&#10095;</span>
+        <img src="" alt="" class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const close = document.querySelector('.close');
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
+        let currentImageIndex = 0;
+
+        thumbnails.forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = thumbnail.src;
+                currentImageIndex = index;
+            });
+        });
+
+        close.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        prev.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + thumbnails.length) % thumbnails.length;
+            lightboxImg.src = thumbnails[currentImageIndex].src;
+        });
+
+        next.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % thumbnails.length;
+            lightboxImg.src = thumbnails[currentImageIndex].src;
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
